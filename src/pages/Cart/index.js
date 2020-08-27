@@ -43,7 +43,7 @@ export function CartScreen({ navigation }) {
 
 
     return (
-    <ScrollView style={{flex: 1}}>  
+    <ScrollView style={{flex: 1, backgroundColor: 'white'}}>  
 
           {list}
 

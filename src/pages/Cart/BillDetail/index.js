@@ -3,6 +3,7 @@ import { View, Text, SafeAreaView, FlatList, StyleSheet, StatusBar, Image , Butt
 import Icon from 'react-native-vector-icons/Ionicons';
 import SimpleIcon from 'react-native-vector-icons/SimpleLineIcons';
 import AntIcon from 'react-native-vector-icons/AntDesign';
+import { Shipment } from '../Shipment';
 
 
 export function BillDetail(props){
@@ -15,9 +16,12 @@ export function BillDetail(props){
                 <BillLine description={"Subtotal"} amount={"₡100.000"} />
                 <BillLine description={"Descuento"} amount={"₡5.000"} />
             </View>
+
+            <Shipment/>
+
             <View style={{height: 1, backgroundColor: '#ccc'}}></View>
             <View style={{padding: 20, paddingBottom: 0}}>
-                <BillLine description={"Total (IVI)"} amount={"₡90.000"} isTotal={true}/>
+                <BillLine description={"Total (IVI)"} amount={"₡94.000"} isTotal={true}/>
             </View>
             
         </View>
