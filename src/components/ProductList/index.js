@@ -1,8 +1,5 @@
 import React from 'react';
-import { View, Text, SafeAreaView, FlatList, StyleSheet, StatusBar, Image , Button, TouchableOpacity} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import SimpleIcon from 'react-native-vector-icons/SimpleLineIcons';
-import AntIcon from 'react-native-vector-icons/AntDesign';
+import { FlatList, StyleSheet, StatusBar, Image, TouchableOpacity} from 'react-native';
 import { NumberInput } from '../NumberInput';
 import { ProductSummary } from '../ProductSummary';
 export function ProductList(props) {

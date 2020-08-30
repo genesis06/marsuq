@@ -1,8 +1,5 @@
 import * as React from 'react';
-import { View, Text,ScrollView, SafeAreaView, FlatList, StyleSheet, StatusBar, Image , Button, TouchableHighlight} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import SimpleIcon from 'react-native-vector-icons/SimpleLineIcons';
-import AntIcon from 'react-native-vector-icons/AntDesign';
+import { View, Text,ScrollView, Image , Button} from 'react-native';
 import { ProductSummary } from '../../components/ProductSummary';
 
 export function ProductDetailScreen(){

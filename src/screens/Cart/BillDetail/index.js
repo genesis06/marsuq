@@ -1,8 +1,5 @@
 import React from 'react';
-import { View, Text, SafeAreaView, FlatList, StyleSheet, StatusBar, Image , Button, TouchableHighlight} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import SimpleIcon from 'react-native-vector-icons/SimpleLineIcons';
-import AntIcon from 'react-native-vector-icons/AntDesign';
+import { View, Text} from 'react-native';
 import { Shipment } from '../Shipment';
 
 

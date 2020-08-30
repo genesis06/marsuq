@@ -1,25 +1,18 @@
 import * as React from 'react';
-import { View, Text, SafeAreaView, FlatList, StyleSheet, StatusBar, Image , Button, TouchableHighlight} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import SimpleIcon from 'react-native-vector-icons/SimpleLineIcons';
-import AntIcon from 'react-native-vector-icons/AntDesign';
+import { View, SafeAreaView, StyleSheet, StatusBar} from 'react-native';
 import { ProductList } from '../../components/ProductList';
 import { SearchBar } from '../../components/SearchBar';
 
 export function CatalogueScreen({ navigation }) {
-  // const { title }  = route.params;
-
   
     return (
       <View style={{ flex: 1, backgroundColor: 'white'}}>
         <SearchBar/>
+        
         <SafeAreaView style={styles.container} >
-        {/* <Button
-        title="Go to Details"
-        onPress={() => navigation.navigate('ProductDetail')}
-      /> */}
       
           <ProductList numColumns={2} horizontal={false} navigation={navigation}></ProductList>
+
         </SafeAreaView>
       </View>
     );

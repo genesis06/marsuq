@@ -1,15 +1,12 @@
 import React from 'react';
-import { view, Text, StyleSheet, View, Button } from 'react-native';
+import { Text, View } from 'react-native';
 import {
-    Drawer,
     DrawerContentScrollView,
-    DrawerItem,
-    DrawerItemList
+    DrawerItem
 } from '@react-navigation/drawer';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import SimpleIcon from 'react-native-vector-icons/SimpleLineIcons';
-import { DrawerActions } from '@react-navigation/native';
 
 export function DrawerContent(props) {
     return (

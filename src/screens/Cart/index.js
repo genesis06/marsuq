@@ -1,8 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView, FlatList, StyleSheet, StatusBar, Image , Button, TouchableHighlight} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import SimpleIcon from 'react-native-vector-icons/SimpleLineIcons';
-import AntIcon from 'react-native-vector-icons/AntDesign';
+import { View, ScrollView, StyleSheet, StatusBar, Image} from 'react-native';
 
 import { NumberInput } from '../../components/NumberInput'
 import { ProductSummary } from '../../components/ProductSummary';
