@@ -13,7 +13,7 @@ import { DrawerActions } from '@react-navigation/native';
 
 export function DrawerContent(props) {
     return (
-        <View style={{flex: 1}}>
+        <View style={{flex: 1, backgroundColor: 'white'}}>
             <DrawerContentScrollView {...props}>
                 <View style={{marginTop: 30, marginBottom: 30, paddingLeft: 20, paddingRight: 20}} >
                     <View style={{width: 60, height: 60, borderRadius: 30, borderColor: 'gray', borderWidth: 2, backgroundColor: 'gray', justifyContent: 'center', alignItems: 'center'}}>

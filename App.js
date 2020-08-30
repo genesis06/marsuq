@@ -12,31 +12,41 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { DrawerContent } from './src/pages/DrawerContent';
-import { HomeScreen } from './src/pages/Home';
-import { CatalogueScreen } from './src/pages/Catalogue';
-import { CartScreen } from './src/pages/Cart';
-import { SettingsScreen } from './src/pages/Settings';
+import { DrawerContent } from './src/screens/DrawerContent';
+import { HomeScreen } from './src/screens/Home';
+import { CatalogueScreen } from './src/screens/Catalogue';
+import { CartScreen } from './src/screens/Cart';
+import { SettingsScreen } from './src/screens/Settings';
 
 import Icon from 'react-native-vector-icons/Ionicons';
+import { ProductDetailScreen } from './src/screens/ProductDetail';
 
 
 const Drawer = createDrawerNavigator();
-const HomeStack = createStackNavigator();
+const Stack = createStackNavigator();
 const CatalogueStack = createStackNavigator();
 const CartStack = createStackNavigator();
 
+const MyTheme = {
+  colors: {
+    border: 'transparent',
+    primary: '#0054AC',
+  },
+};
+
 const HomeStackScreen = ({navigation}) => (
-  <HomeStack.Navigator screenOptions={{
+  <Stack.Navigator screenOptions={{
           headerStyle: {
-          backgroundColor: '#009387',
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-          fontWeight: 'bold'
-          }
+            backgroundColor: '#009387',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+            fontWeight: 'bold'
+            },
+            shadowOffset: { height: 0, width: 0 }
+            
       }}>
-          <HomeStack.Screen name="Home" component={HomeScreen} options={{
+          <Stack.Screen name="Home" component={HomeScreen} options={{
           title:'Home',
           headerLeft: () => (
             <Icon 
@@ -48,11 +58,15 @@ const HomeStackScreen = ({navigation}) => (
             />
           )
           }} />
-  </HomeStack.Navigator>
+
+          <Stack.Screen name="ProductDetail" component={ProductDetailScreen} options={{
+                      title:'Producto'
+                      }} />
+  </Stack.Navigator>
   );
 
   const CatalogueStackScreen = ({navigation}) => (
-    <CatalogueStack.Navigator screenOptions={{
+    <Stack.Navigator screenOptions={{
             headerStyle: {
             backgroundColor: '#009387',
             },
@@ -61,7 +75,7 @@ const HomeStackScreen = ({navigation}) => (
             fontWeight: 'bold'
             }
         }}>
-            <CatalogueStack.Screen name="Catalogue" component={CatalogueScreen} options={{
+            <Stack.Screen name="Catalogue" component={CatalogueScreen} options={{
             title:'Catálogo',
             headerLeft: () => (
               <Icon 
@@ -73,11 +87,15 @@ const HomeStackScreen = ({navigation}) => (
               />
             )
             }} />
-    </CatalogueStack.Navigator>
+
+            <Stack.Screen name="ProductDetail" component={ProductDetailScreen} options={{
+            title:'Producto'
+            }} />
+    </Stack.Navigator>
     );
 
     const CartStackScreen = ({navigation}) => (
-      <CartStack.Navigator screenOptions={{
+      <Stack.Navigator screenOptions={{
               headerStyle: {
               backgroundColor: '#009387',
               },
@@ -86,7 +104,7 @@ const HomeStackScreen = ({navigation}) => (
               fontWeight: 'bold'
               }
           }}>
-              <CartStack.Screen name="Cart" component={CartScreen} options={{
+              <Stack.Screen name="Cart" component={CartScreen} options={{
               title:'Carrito',
               headerLeft: () => (
                 <Icon 
@@ -98,14 +116,14 @@ const HomeStackScreen = ({navigation}) => (
                 />
               )
               }} />
-      </CartStack.Navigator>
+      </Stack.Navigator>
       );
 
               {/* <Icon.Button name="ios-menu" size={25} backgroundColor="#009387" onPress={() => navigation.openDrawer()}></Icon.Button> */}
 
  const App = () => {
   return (
-      <NavigationContainer style={{backgroundColor: 'white'}}>
+      <NavigationContainer style={{backgroundColor: 'white'}} theme={MyTheme}>
           <Drawer.Navigator initialRouteName="HomeStackScreen" drawerContent={(props) => <DrawerContent {...props}/>}>
             <Drawer.Screen name="HomeStackScreen" component={HomeStackScreen} options={{
             headerStyle: {

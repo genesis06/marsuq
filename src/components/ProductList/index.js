@@ -1,12 +1,11 @@
 import React from 'react';
-import { View, Text, SafeAreaView, FlatList, StyleSheet, StatusBar, Image , Button, TouchableHighlight} from 'react-native';
+import { View, Text, SafeAreaView, FlatList, StyleSheet, StatusBar, Image , Button, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import SimpleIcon from 'react-native-vector-icons/SimpleLineIcons';
 import AntIcon from 'react-native-vector-icons/AntDesign';
-import { NumberInput } from '../../../components/NumberInput';
-import { ProductSummary } from '../../../components/ProductSummary';
-
-export function ProductList(props, { navigation }) {
+import { NumberInput } from '../NumberInput';
+import { ProductSummary } from '../ProductSummary';
+export function ProductList(props) {
 
     const DATA = [
       {
@@ -84,9 +83,9 @@ export function ProductList(props, { navigation }) {
     ];
   
     const Product = ({ title }) => (
-      <View style={styles.item}>
+      <TouchableOpacity style={styles.item} onPress={() => props.navigation.navigate('ProductDetail')}>
         <Image 
-            source={require('../../../../assets/perfume.jpg')}
+            source={require('../../../assets/perfume.jpg')}
             style={{ width: '50%', height: 200 }}></Image>
         {/* <Text style={styles.title, {marginTop: 5, alignSelf: 'flex-start', fontSize: 16}} numberOfLines={1}>{title}</Text>
         <View style={{flexDirection: 'row', alignSelf: 'flex-start' ,alignItems: 'flex-end', marginTop: 5}}>
@@ -98,7 +97,7 @@ export function ProductList(props, { navigation }) {
         
         <NumberInput width={'100%'} />
        
-      </View>
+      </TouchableOpacity>
     );
   
       const renderItem = ({ item }) => (
@@ -112,6 +111,7 @@ export function ProductList(props, { navigation }) {
               numColumns={props.numColumns}
               horizontal={props.horizontal}
               keyExtractor={item => item.id}
+              
             />
       );
     }
