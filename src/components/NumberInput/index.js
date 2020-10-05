@@ -6,12 +6,14 @@ import AntIcon from 'react-native-vector-icons/AntDesign';
 
 export function NumberInput(props){
 
+    const [count, setCount] = React.useState(0);
+
     return(
         <View style={{flex:1, flexDirection: 'row', alignItems: 'center', marginTop: 20, borderWidth: 0.2, borderColor: 'gray', borderRadius: 5, width: props.width}}>
         
-          <SignButton icon={{name:"minus", color: 'black', size: 30}} position={'left'} size={40}></SignButton>
-          <Text style={{flex: 2, textAlign: 'center', fontSize: 16}}>0</Text>
-          <SignButton icon={{name:"plus", color: 'black', size: 30}} position={'right'} size={40}></SignButton>
+          <SignButton icon={{name:"minus", color: 'black', size: 30}} position={'left'} size={40} onPress={()=>{ if(count > 0){setCount(count-1)} }}></SignButton>
+          <Text style={{flex: 2, textAlign: 'center', fontSize: 16}}>{count}</Text>
+          <SignButton icon={{name:"plus", color: 'black', size: 30}} position={'right'} size={40} onPress={()=>{setCount(count+1)}}></SignButton>
 
         </View> 
     );
@@ -29,7 +31,7 @@ export function NumberInput(props){
                     name={props.icon.name}
                     color={props.icon.color}
                     size={props.icon.size}
-                    onPress={() => console.log('Pressed')}/>  
+                    onPress={props.onPress}/>  
             </View>
         );
     }
