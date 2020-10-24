@@ -1,17 +1,20 @@
 import * as React from 'react';
-import { View, Text,ScrollView, Image , Button} from 'react-native';
+import { View, Text,ScrollView, Image, TouchableOpacity} from 'react-native';
 import { ProductSummary } from '../../components/ProductSummary';
+import { Button } from 'react-native-elements';
 
-export function ProductDetailScreen(){
+export function ProductDetailScreen({ navigation, route }){
+
+        let product = route.params?.item;
 
     return(
-        <View style={{flex: 1}}>
+        <View style={{flex: 1, backgroundColor: 'white'}}>
             <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
-            <Image source={require('../../../assets/perfume.jpg')}
-            style={{ width: '90%', height: 400 , alignSelf: 'center'}}></Image>
+            <Image source={{uri: product.image}}
+            style={{ width: '90%', height: 400 , alignSelf: 'center'}} resizeMode="contain"></Image>
 
             <View style={{marginLeft: 30}}>
-                <ProductSummary title={"Dolce & Gabbana The Only One, 100ml"}/>
+                <ProductSummary item={product}/>
 
                 
             </View>
@@ -34,7 +37,7 @@ export function ProductDetailScreen(){
         
             
         </ScrollView>
-        <Button title={"AGREGAR A CARRITO"}></Button>
+        <Button title={"AGREGAR A CARRITO"} buttonStyle={{backgroundColor: '#FFC300', height: 60}} titleStyle={{color: 'black'}}></Button>
         </View>
         
     );

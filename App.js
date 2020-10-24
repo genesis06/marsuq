@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -20,12 +20,13 @@ import { SettingsScreen } from './src/screens/Settings';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import { ProductDetailScreen } from './src/screens/ProductDetail';
+import { LoginScreen } from './src/screens/Login';
 
+import auth from '@react-native-firebase/auth';
+import firebase from '@react-native-firebase/app';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
-const CatalogueStack = createStackNavigator();
-const CartStack = createStackNavigator();
 
 const MyTheme = {
   colors: {
@@ -34,10 +35,21 @@ const MyTheme = {
   },
 };
 
+const RootStackScreen = ({navigation}) => (
+  <Stack.Navigator screenOptions={{
+      headerShown: false
+    }}>
+    <Stack.Screen name="Login" component={LoginScreen} options={{
+    title:'Login'
+    }} />
+
+</Stack.Navigator>
+);
+
 const HomeStackScreen = ({navigation}) => (
   <Stack.Navigator screenOptions={{
           headerStyle: {
-            backgroundColor: '#009387',
+            backgroundColor: '#0857D1',
             },
             headerTintColor: '#fff',
             headerTitleStyle: {
@@ -68,7 +80,7 @@ const HomeStackScreen = ({navigation}) => (
   const CatalogueStackScreen = ({navigation}) => (
     <Stack.Navigator screenOptions={{
             headerStyle: {
-            backgroundColor: '#009387',
+            backgroundColor: '#0857D1',
             },
             headerTintColor: '#fff',
             headerTitleStyle: {
@@ -97,7 +109,7 @@ const HomeStackScreen = ({navigation}) => (
     const CartStackScreen = ({navigation}) => (
       <Stack.Navigator screenOptions={{
               headerStyle: {
-              backgroundColor: '#009387',
+              backgroundColor: '#0857D1',
               },
               headerTintColor: '#fff',
               headerTitleStyle: {
@@ -122,9 +134,44 @@ const HomeStackScreen = ({navigation}) => (
               {/* <Icon.Button name="ios-menu" size={25} backgroundColor="#009387" onPress={() => navigation.openDrawer()}></Icon.Button> */}
 
  const App = () => {
+
+
+
+// Set an initializing state whilst Firebase connects
+const [initializing, setInitializing] = useState(true);
+const [user, setUser] = useState();
+
+let initialRoute;
+
+// Handle user state changes
+function onAuthStateChanged(user) {
+  setUser(user);
+  if (initializing) setInitializing(false);
+}
+
+useEffect(() => {
+  const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+  return subscriber; // unsubscribe on unmount
+}, []);
+
+if (initializing) return null;
+
+else if (user) {
+    console.log("ACTIVED SESSION", user)
+    initialRoute = 'HomeStackScreen';
+}else if(!user){
+    initialRoute = 'RootStackScreen';
+}
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+
+
+
   return (
       <NavigationContainer style={{backgroundColor: 'white'}} theme={MyTheme}>
-          <Drawer.Navigator initialRouteName="HomeStackScreen" drawerContent={(props) => <DrawerContent {...props}/>}>
+          <Drawer.Navigator initialRouteName={initialRoute} drawerContent={(props) => <DrawerContent {...props}/>}>
             <Drawer.Screen name="HomeStackScreen" component={HomeStackScreen} options={{
             headerStyle: {
               backgroundColor: 'red',
@@ -132,6 +179,7 @@ const HomeStackScreen = ({navigation}) => (
             <Drawer.Screen name="CatalogueStackScreen" component={CatalogueStackScreen}/>
             <Drawer.Screen name="CartStackScreen" component={CartStackScreen} />
             <Drawer.Screen name="Settings" component={SettingsScreen} />
+            <Drawer.Screen name="RootStackScreen" component={RootStackScreen} />
         </Drawer.Navigator>
       </NavigationContainer>
   );

@@ -1,96 +1,42 @@
-import React from 'react';
+import React, { useEffect }  from 'react';
 import { FlatList, StyleSheet, StatusBar, Image, TouchableOpacity} from 'react-native';
 import { NumberInput } from '../NumberInput';
 import { ProductSummary } from '../ProductSummary';
+import firestore from '@react-native-firebase/firestore';
+const fragancesCollectionRef = firestore().collection('Fragances');
+
 export function ProductList(props) {
 
-    const DATA = [
-      {
-        id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28a',
-        title: 'Dolce & Gabbana The Only One',
-      },
-      {
-        id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-        title: 'Dolce & Gabbana The Only One',
-      },
-      {
-        id: '58694a0f-3da1-471f-bd96-14571e29d7',
-        title: 'Dolce & Gabbana The Only One',
-      },
-      {
-        id: 'bd7acbea-c1b1-46c2-aed5-3d53abb28ba',
-        title: 'Dolce & Gabbana The Only One',
-      },
-      {
-        id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f3',
-        title: 'Dolce & Gabbana The Only One',
-      },
-      {
-        id: '58694a0f-3da1-471f-b96-145571e29d7',
-        title: 'Dolce & Gabbana The Only One',
-      },
-      {
-        id: 'bd7acbea-c1b1-46c2-ed5-3ad53abb28ba',
-        title: 'Dolce & Gabbana The Only One',
-      },
-      {
-        id: '3ac68afc-c60-48d3-a4f8-fbd91aa97f63',
-        title: 'Dolce & Gabbana The Only One',
-      },
-      {
-        id: '58694a0f-3da1-41f-bd96-145571e29d7',
-        title: 'Dolce & Gabbana The Only One',
-      },
-      {
-        id: 'bd7acbea-c1b1-46c-aed5-3ad53abb28ba',
-        title: 'Dolce & Gabbana The Only One',
-      },
-      {
-        id: '3ac68afc-c605-8d3-a4f8-fbd91aa97f63',
-        title: 'Dolce & Gabbana The Only One',
-      },
-      {
-        id: '58694a0f-3a1-471f-bd96-145571e29d7',
-        title: 'Dolce & Gabbana The Only One',
-      },
-      {
-        id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-        title: 'Dolce & Gabbana The Only One',
-      },
-      {
-        id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-        title: 'Dolce & Gabbana The Only One',
-      },
-      {
-        id: '5869a0f-3da1-471f-bd96-145571e29d7',
-        title: 'Dolce & Gabbana The Only One',
-      },
-      {
-        id: 'bd7acbea-c1b1-46c2-aed5-3a53abb28ba',
-        title: 'Dolce & Gabbana The Only One',
-      },
-      {
-        id: '3ac68afc-c605-483-a4f8-fbd91aa97f63',
-        title: 'Dolce & Gabbana The Only One',
-      },
-      {
-        id: '58694a0f-3da1-471f-bd96-145571e29d7',
-        title: 'Dolce & Gabbana The Only One',
-      },
-    ];
-  
-    const Product = ({ title }) => (
-      <TouchableOpacity style={styles.item} onPress={() => props.navigation.navigate('ProductDetail')}>
-        <Image 
-            source={require('../../../assets/perfume.jpg')}
-            style={{ width: '50%', height: 200 }}></Image>
-        {/* <Text style={styles.title, {marginTop: 5, alignSelf: 'flex-start', fontSize: 16}} numberOfLines={1}>{title}</Text>
-        <View style={{flexDirection: 'row', alignSelf: 'flex-start' ,alignItems: 'flex-end', marginTop: 5}}>
-          <Text style={{fontWeight: 'bold', fontSize:16}} numberOfLines={1}>₡50.000</Text>
-          <Text style={{fontSize:11, marginBottom: 2, marginLeft: 5, color: 'gray'}} numberOfLines={1}> ̶₡̶6̶5̶.̶0̶0̶0̶</Text>
-        </View> */}
+  const [fragances, setFragances] = React.useState([]);
 
-        <ProductSummary title={title} />
+    useEffect(() => {
+      const subscriber = fragancesCollectionRef
+        .onSnapshot((querySnapshot) => {
+          const frags = [];
+  
+          querySnapshot.forEach(documentSnapshot => {
+            frags.push({
+              ...documentSnapshot.data(),
+              key: documentSnapshot.id,
+            });
+          });
+  
+          setFragances(frags);
+        });
+  
+      // Unsubscribe from events when no longer in use
+      return () => subscriber();
+    }, []);
+
+    // console.log(fragances)
+  
+    const Product = ({ item }) => (
+      <TouchableOpacity style={styles.item} onPress={() => props.navigation.navigate('ProductDetail', { item: item })}>
+        <Image 
+            source={{uri: item.image}}
+            style={{ width: '80%', height: 200 }} resizeMode="contain"></Image>
+
+        <ProductSummary item={item} />
         
         <NumberInput width={'100%'} />
        
@@ -98,16 +44,16 @@ export function ProductList(props) {
     );
   
       const renderItem = ({ item }) => (
-        <Product title={item.title} />
+        <Product item={item} />
       );
     
       return (
             <FlatList
-              data={DATA}
+              data={fragances}
               renderItem={renderItem}
               numColumns={props.numColumns}
               horizontal={props.horizontal}
-              keyExtractor={item => item.id}
+              keyExtractor={item => item.key}
               
             />
       );
@@ -123,11 +69,12 @@ export function ProductList(props) {
           padding: 15,
           flex: 1,
           justifyContent: "space-between",
-          alignItems: 'center',
+          // alignItems: 'center',
           borderColor: '#ccc',
           borderWidth: 0.3,
-          width: '50%',
+          width: '80%',
           maxWidth: 207,
+          minWidth: 200,
           minHeight: 340
         },
         title: {

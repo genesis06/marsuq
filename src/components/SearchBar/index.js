@@ -5,7 +5,7 @@ import SimpleIcon from 'react-native-vector-icons/SimpleLineIcons';
 
 export function SearchBar(){
     return(
-        <View style={{flex: 1, flexDirection: 'row', maxHeight: 70, backgroundColor: '#009387', padding: 10, paddingLeft: 15, paddingRight: 15}}>
+        <View style={{flex: 1, flexDirection: 'row', maxHeight: 70, backgroundColor: '#0857D1', padding: 10, paddingLeft: 15, paddingRight: 15}}>
             <SimpleIcon 
                 name="magnifier"
                 color={'gray'}

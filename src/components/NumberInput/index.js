@@ -9,7 +9,7 @@ export function NumberInput(props){
     const [count, setCount] = React.useState(0);
 
     return(
-        <View style={{flex:1, flexDirection: 'row', alignItems: 'center', marginTop: 20, borderWidth: 0.2, borderColor: 'gray', borderRadius: 5, width: props.width}}>
+        <View style={{flex:1, flexDirection: 'row', alignItems: 'center', marginTop: 20, borderWidth: 0.4, borderColor: 'gray', borderRadius: 5, width: props.width, maxHeight: 40}}>
         
           <SignButton icon={{name:"minus", color: 'black', size: 30}} position={'left'} size={40} onPress={()=>{ if(count > 0){setCount(count-1)} }}></SignButton>
           <Text style={{flex: 2, textAlign: 'center', fontSize: 16}}>{count}</Text>

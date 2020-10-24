@@ -8,6 +8,8 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import SimpleIcon from 'react-native-vector-icons/SimpleLineIcons';
 
+import auth from '@react-native-firebase/auth';
+
 export function DrawerContent(props) {
     return (
         <View style={{flex: 1, backgroundColor: 'white'}}>
@@ -101,10 +103,21 @@ export function DrawerContent(props) {
                     )}
                     label="Cerrar sesión"
                     labelStyle={{fontSize: 16, color: 'black'}}
-                    onPress={() => {}}
+                    onPress={() => {signOut(props.navigation)}}
                     />
 
             </View>
         </View>
     );
+}
+
+function signOut(navigation) {
+    auth()
+    .signOut()
+    .then(() => {
+        navigation.navigate('RootStackScreen');
+    }).catch(err =>{
+        console.log("ERROR SIGN OUT ", err)
+        navigation.navigate('RootStackScreen');
+    });
 }
