@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, ActivityIndicator, Image, Alert} from 'react-native';
+import { View, ActivityIndicator, Image, Alert, Modal, Text, TextInput} from 'react-native';
 import SimpleIcon from 'react-native-vector-icons/SimpleLineIcons';
 import { Input, Button } from 'react-native-elements'
 
 import auth from '@react-native-firebase/auth';
+import { ResetPasswordModal } from './ResetPasswordModal';
 
 
 
@@ -13,6 +14,7 @@ export function LoginScreen({navigation}){
     const [password, setPassword] = React.useState("123456");
     const [isLoading, setIsLoading] = React.useState(false);
 
+    const [modalVisible, setModalVisible] = React.useState(false);
 
     return(
         <View style={{flex: 1, justifyContent: 'center', backgroundColor: 'white', margin: 30}}>
@@ -57,12 +59,14 @@ export function LoginScreen({navigation}){
             </View>
             
             
-            <Button title={"¿Olvidó su contraseña"} type={"clear"} titleStyle={{ flex: 1, textAlign: 'left', color: 'black', marginTop: 0, fontSize: 15}} onPress={()=>{resetPassword(username)}}></Button>
+            <Button title={"¿Olvidó su contraseña"} type={"clear"} titleStyle={{ flex: 1, textAlign: 'left', color: 'black', marginTop: 0, fontSize: 15}}  onPress={() => {setModalVisible(true);}}></Button>
             
 
             <Button title={"Ingresar"} buttonStyle={{backgroundColor: '#0857D1', marginTop: 25}} onPress={()=>{login(navigation, username, password, setIsLoading)}}></Button>
             <Button title={"Registrarme"} type={"clear"} titleStyle={{color: 'black'}}></Button>
             <ActivityIndicator size="large" animating={isLoading} color="black" style={{position: 'absolute', alignSelf: 'center'}}/>
+
+            <ResetPasswordModal modalVisible={modalVisible} setModalVisible={setModalVisible} />
         </View>
     );
 }
@@ -100,23 +104,12 @@ function login(navigation, username, password, setIsLoading){
     });
 }
 
-function resetPassword(email){
-    auth().sendPasswordResetEmail(email).then(res => {
-        console.log(res);
-        showAlert("Cambio de contraseña", "Se ha enviado un correo electrónico para el cambio de su contraseña.")
-    }).catch(err => {
-        console.log(err);
-        showAlert("Error", "Ocurrió un error")
-    })
-}
-
-
-function showAlert(title, message){
+function showAlert(title, message, setModalVisible){
     Alert.alert(
         title,
         message,
         [
-          { text: 'Ok', onPress: () => console.log('OK Pressed') }
+          { text: 'Ok', onPress: () => { if(setModalVisible){setModalVisible(false)}},  }
         ],
         { cancelable: false }
       );
