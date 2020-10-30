@@ -1,27 +1,51 @@
 import React from 'react';
-import { View, ActivityIndicator, Image, Alert, Modal, Text, TextInput} from 'react-native';
+import { View, ActivityIndicator, Image, Alert} from 'react-native';
 import SimpleIcon from 'react-native-vector-icons/SimpleLineIcons';
 import { Input, Button } from 'react-native-elements'
 
 import auth from '@react-native-firebase/auth';
-import { ResetPasswordModal } from './ResetPasswordModal';
 
 
 
-export function LoginScreen({navigation}){
+export function SignUpScreen({navigation}){
 
+    const [name, setName] = React.useState("Génesis Salazar");
     const [username, setUsername] = React.useState("genesis.061193@gmail.com");
     const [password, setPassword] = React.useState("123456");
+    const [phone, setPhone] = React.useState("123456");
     const [isLoading, setIsLoading] = React.useState(false);
 
     const [modalVisible, setModalVisible] = React.useState(false);
 
     return(
-        <View style={{flex: 1, justifyContent: 'center', backgroundColor: 'white', margin: 30}}>
+        <View style={{flex: 1}}>
+        <View style={{flexDirection: "column", alignItems: "flex-start"}}>
+            <Button title={"Atrás"} type={"clear"} titleStyle={{color: '#0857D1', marginTop: 35,  marginLeft: 15}} onPress={()=>{navigation.goBack()}}></Button>
+        </View>
+        
+        
+        <View style={{flex: 1, justifyContent: 'center', backgroundColor: 'white', padding: 30}}>
+            
 
             <Image 
                 source={require('../../../assets/logo.jpeg')}
-                style={{ width: '100%', height: '20%', marginBottom: '20%' }} resizeMode="contain"></Image>
+                style={{ width: '100%', height: '15%', marginBottom: '20%' }} resizeMode="contain"></Image>
+            <View>
+                <Input
+                    label={'Nombre'}
+                    labelStyle={{color: 'gray'}}
+                    placeholder='Nombre'
+                    leftIcon={
+                        <SimpleIcon
+                        name='user'
+                        size={24}
+                        color='black'
+                        />
+                    }
+                    value={name}
+                    onChangeText={value => setName(value)}
+                />
+            </View>
             <View>
                 <Input
                     label={'Correo'}
@@ -57,21 +81,35 @@ export function LoginScreen({navigation}){
                     secureTextEntry={true}
                 />
             </View>
-            
-            
-            <Button title={"¿Olvidó su contraseña"} type={"clear"} titleStyle={{ flex: 1, textAlign: 'left', color: 'black', marginTop: 0, fontSize: 15}}  onPress={() => {setModalVisible(true);}}></Button>
-            
 
-            <Button title={"Ingresar"} buttonStyle={{backgroundColor: '#0857D1', marginTop: 25}} onPress={()=>{login(navigation, username, password, setIsLoading)}}></Button>
-            <Button title={"Registrarme"} type={"clear"} titleStyle={{color: 'black'}} onPress={()=>{navigation.navigate("SignUp")}}></Button>
+            <View style={{marginTop: 10}}>
+                <Input
+                    label={'Telefono'}
+                    labelStyle={{color: 'gray'}}
+                    placeholder='Ej: 88889999'
+                    errorStyle={{backgroundColor: 'red', display: 'none'}}
+                    leftIcon={
+                        <SimpleIcon
+                        name='phone'
+                        size={24}
+                        color='black'
+                        />
+                    }
+                    value={phone}
+                    onChangeText={value => setPhone(value)}
+                />
+            </View>
+
+            <Button title={"Registrarme"} buttonStyle={{backgroundColor: '#0857D1', marginTop: 25}} onPress={()=>{signUp(navigation, username, password, name, phone, setIsLoading)}}></Button>
+
             <ActivityIndicator size="large" animating={isLoading} color="black" style={{position: 'absolute', alignSelf: 'center'}}/>
 
-            <ResetPasswordModal modalVisible={modalVisible} setModalVisible={setModalVisible} />
+        </View>
         </View>
     );
 }
 
-function login(navigation, username, password, setIsLoading){
+function signUp(navigation, username, password, setIsLoading){
 
     setIsLoading(true);
 

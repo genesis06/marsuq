@@ -7,7 +7,6 @@
  */
 import 'react-native-gesture-handler';
 import React, { useState, useEffect } from 'react';
-import { Button, View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -17,10 +16,11 @@ import { HomeScreen } from './src/screens/Home';
 import { CatalogueScreen } from './src/screens/Catalogue';
 import { CartScreen } from './src/screens/Cart';
 import { SettingsScreen } from './src/screens/Settings';
-
-import Icon from 'react-native-vector-icons/Ionicons';
 import { ProductDetailScreen } from './src/screens/ProductDetail';
 import { LoginScreen } from './src/screens/Login';
+import { SignUpScreen } from './src/screens/SignUp';
+
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import auth from '@react-native-firebase/auth';
 import firebase from '@react-native-firebase/app';
@@ -42,6 +42,10 @@ const RootStackScreen = ({navigation}) => (
     <Stack.Screen name="Login" component={LoginScreen} options={{
     title:'Login'
     }} />
+
+  <Stack.Screen name="SignUp" component={SignUpScreen} options={{
+      title:'Login'
+      }} />
 
 </Stack.Navigator>
 );

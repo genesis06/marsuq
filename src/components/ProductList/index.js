@@ -12,16 +12,20 @@ export function ProductList(props) {
     useEffect(() => {
       const subscriber = fragancesCollectionRef
         .onSnapshot((querySnapshot) => {
-          const frags = [];
+          
   
-          querySnapshot.forEach(documentSnapshot => {
-            frags.push({
-              ...documentSnapshot.data(),
-              key: documentSnapshot.id,
+          if(querySnapshot){
+            const frags = [];
+            querySnapshot.forEach(documentSnapshot => {
+              frags.push({
+                ...documentSnapshot.data(),
+                key: documentSnapshot.id,
+              });
             });
-          });
-  
-          setFragances(frags);
+    
+            setFragances(frags);
+          }
+          
         });
   
       // Unsubscribe from events when no longer in use
